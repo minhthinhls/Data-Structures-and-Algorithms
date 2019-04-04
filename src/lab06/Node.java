@@ -15,6 +15,14 @@ public class Node {
     Node leftChild; // This node’s left child
     Node rightChild; // This node’s right child
 
+    public Node() {
+        // Create new node.
+    }
+
+    public Node(int data) {
+        this.data = data;
+    }
+
     public void displayNode() {
         System.out.print("{" + data + "}");
     }

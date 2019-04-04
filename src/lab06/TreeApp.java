@@ -41,11 +41,13 @@ public class TreeApp extends Tree {
         mainTree.insert(74);
         mainTree.insert(85);
         mainTree.insert(89);
+        subTree.insertRecursive(90);
 
         System.out.println("Number of Elems in Main Tree = " + mainTree.countElems());
         System.out.println("Height of Main Binary Tree = " + mainTree.getHeight());
         System.out.println("Number of Leaves in Main Tree = " + mainTree.countLeaves());
         System.out.println("The Main tree is fully Balanced = " + mainTree.checkFullyBalanced());
+        System.out.println("The Sub tree is fully Balanced = " + subTree.checkFullyBalanced());
         System.out.println("The Main tree is identical to subTree = " + mainTree.isIdentical(subTree));
 
         System.out.println("This is Main Tree: ");

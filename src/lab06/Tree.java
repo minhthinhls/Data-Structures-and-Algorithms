@@ -79,6 +79,24 @@ public class Tree {
     } // end insert()
 // -------------------------------------------------------------
 
+    public void insertRecursive(int data) {
+        root = insertRecursive(root, data);
+    }
+// -------------------------------------------------------------
+
+    private Node insertRecursive(Node head, int data) {
+        if (head == null) {
+            return new Node(data);
+        }
+        if (head.data < data) {
+            head.rightChild = insertRecursive(head.rightChild, data);
+        } else {
+            head.leftChild = insertRecursive(head.leftChild, data);
+        }
+        return head;
+    }
+// -------------------------------------------------------------
+
     private Node getSuccessor(Node delNode) {
         Node successorParent = delNode;
         Node successor = delNode;
@@ -276,7 +294,7 @@ public class Tree {
     }
 
 // -------------------------------------------------------------
-    public int countElems(Node localRoot) {
+    private int countElems(Node localRoot) {
         if (localRoot == null) { // Base case
             return 0;
         } else {
@@ -284,17 +302,6 @@ public class Tree {
         }
     }
 
-// -------------------------------------------------------------
-    /*
-    public int countElems(Node localRoot) {
-        if(localRoot != null)
-        {
-            nElems++;
-            countElems(localRoot.leftChild);
-            countElems(localRoot.rightChild);
-        }
-        return nElems;
-    }*/
 // -------------------------------------------------------------
     /**
      * Question B, finding max Height of a Binary Tree.
@@ -306,37 +313,11 @@ public class Tree {
     }
 
 // -------------------------------------------------------------
-    public int getHeight(Node local) {
+    private int getHeight(Node local) {
         if (local == null) {
             return -1;
         }
         return Math.max(getHeight(local.leftChild) + 1, getHeight(local.rightChild) + 1);
-    }
-
-// -------------------------------------------------------------
-    /**
-     * This method is lengthy! Use getHeight(@param Node) above.
-     *
-     * @param localRoot
-     * @return
-     */
-    public int computeHeight(Node localRoot) {
-        int leftDepth, rightDepth;
-
-        if (localRoot == null) { // Base case
-            return -1;
-        } else {
-            /* Compute the depth of each subtree */
-            leftDepth = computeHeight(localRoot.leftChild);
-            rightDepth = computeHeight(localRoot.rightChild);
-
-            /* Use the larger one */
-            if (leftDepth >= rightDepth) {
-                return (leftDepth + 1);
-            } else {
-                return (rightDepth + 1);
-            }
-        }
     }
 
 // -------------------------------------------------------------
@@ -350,7 +331,7 @@ public class Tree {
     }
 
 // -------------------------------------------------------------
-    public int countLeaves(Node localRoot) {
+    private int countLeaves(Node localRoot) {
         if (localRoot == null) { // Base case = 0
             return 0;
         }
@@ -368,13 +349,7 @@ public class Tree {
      * @return
      */
     public boolean checkFullyBalanced() {
-        Tree subTree = this;
-        return checkFullyBalanced(subTree);
-    }
-
-// -------------------------------------------------------------
-    public boolean checkFullyBalanced(Tree subTree) {
-        return subTree.countElems() == pow(2, subTree.getHeight() + 1) - 1;
+        return this.countElems() == pow(2, this.getHeight() + 1) - 1;
     }
 
 // -------------------------------------------------------------
@@ -390,7 +365,7 @@ public class Tree {
     }
 
 // -------------------------------------------------------------
-    public boolean isIdentical(Tree main, Tree sub) {
+    private boolean isIdentical(Tree main, Tree sub) {
         Node a = main.getRoot();
         Node b = sub.getRoot();
         return identicalTrees(a, b);
@@ -399,7 +374,7 @@ public class Tree {
 // -------------------------------------------------------------
     /* Given two trees, return true if they are
        structurally identical */
-    boolean identicalTrees(Node a, Node b) {
+    private boolean identicalTrees(Node a, Node b) {
         /*1. both empty */
         if (a == null && b == null) {
             return true;

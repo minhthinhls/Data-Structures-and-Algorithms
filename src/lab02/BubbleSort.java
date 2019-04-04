@@ -5,8 +5,12 @@ package lab02;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -37,24 +41,56 @@ public class BubbleSort {
         }
     } // End bubbleSort() function
 
-    public static void main(String[] args) {
-        int arr[] = new int[50000];
-        for (int i = 0; i < 50000; i++) {
-            arr[i] = i;
+    public static void show(int[] arr) {
+        for (int i : arr) {
+            System.out.print(i + ", ");
         }
-        long a = now();
-        bubbleSort(arr);
-        long b = now();
-        System.out.print(b - a + " ms\n");
+        System.out.println();
+    }
 
-        int arr2[] = new int[50000];
-        for (int i = 0; i < 50000; i++) {
-            arr2[i] = 49999 - i;
+    public static int[] randomInit(int numElements) {
+        Random aRandom = new Random();
+        int a[] = new int[numElements];
+        for (int i = 0; i < numElements; i++) {
+            a[i] = Math.abs(aRandom.nextInt() % numElements);
+            // Assign a random long integer value to current element of the array
         }
-        long x = now();
-        bubbleSort(arr2);
-        long y = now();
-        System.out.print(y - x + " ms\n");
+        return a;
+    }
+
+    public static void bubbleSortApp(int[] arr) {
+        show(arr);
+        long before = now();
+        bubbleSort(arr);
+        long after = now();
+        show(arr);
+        System.out.println("Sorting takes " + (after - before) + " ms\n");
+    }
+
+    public static void main(String[] args) {
+        int sorted[] = new int[50000];
+        for (int i = 0; i < 50000; i++) {
+            sorted[i] = i;
+        }
+        bubbleSortApp(sorted);
+
+        int inverseSorted[] = new int[50000];
+        for (int i = 0; i < 50000; i++) {
+            inverseSorted[i] = 49999 - i;
+        }
+        bubbleSortApp(inverseSorted);
+
+        // Create an Array List.
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 50000; i++) {
+            list.add(i);
+        }
+
+        // Shuffle the elements in the array.
+        Collections.shuffle(list);
+        int[] randomArray = list.stream().mapToInt(Integer::intValue).toArray();
+
+        bubbleSortApp(randomArray);
 
     }
 
