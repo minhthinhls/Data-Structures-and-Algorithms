@@ -16,32 +16,11 @@ import java.io.InputStreamReader;
 public class TreeApp extends Tree {
 
     public static void main(String[] args) throws IOException {
-        Tree subTree = new Tree();
         Tree mainTree = new Tree();
+        Tree subTree = new Tree();
 
-        mainTree.insert(50);
-        subTree.insert(50);
-        mainTree.insert(25);
-        subTree.insert(25);
-        mainTree.insert(75);
-        subTree.insert(75);
-        mainTree.insert(12);
-        subTree.insert(12);
-        mainTree.insert(37);
-        subTree.insert(37);
-        mainTree.insert(87);
-        subTree.insert(87);
-        mainTree.insert(72);
-        subTree.insert(72);
-        mainTree.insert(11);
-        mainTree.insert(13);
-        mainTree.insert(33);
-        mainTree.insert(40);
-        mainTree.insert(70);
-        mainTree.insert(74);
-        mainTree.insert(85);
-        mainTree.insert(89);
-        subTree.insertRecursive(90);
+        insert(mainTree, new int[]{50, 25, 75, 12, 37, 87, 72, 11, 13, 33, 40, 70, 74, 85, 89});
+        insert(subTree, new int[]{50, 25, 75, 12, 37, 87, 72, 90, 11, 13, 85});
 
         System.out.println("Number of Elems in Main Tree = " + mainTree.countElems());
         System.out.println("Height of Main Binary Tree = " + mainTree.getHeight());
@@ -111,8 +90,15 @@ public class TreeApp extends Tree {
         } // end while
          */
     } // end main()
-    // -------------------------------------------------------------
 
+    // -------------------------------------------------------------
+    public static void insert(Tree tree, int[] arr) {
+        for (int value : arr) {
+            tree.insert(value);
+        }
+    }
+
+    //--------------------------------------------------------------
     public static String getString() throws IOException {
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);

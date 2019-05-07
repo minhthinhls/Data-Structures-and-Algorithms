@@ -1,6 +1,8 @@
 package lab06;
 
 import static java.lang.Math.pow;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /*
@@ -344,11 +346,109 @@ public class Tree {
 
 // -------------------------------------------------------------
     /**
-     * Question D, to check whether this tree is Fully Balanced or not.
+     * Question D, to check whether this tree is Fully Balanced or not, which
+     * means the left side and right side of binary tree must have the same
+     * height and the same number of elements.
      *
      * @return
      */
     public boolean checkFullyBalanced() {
+        int queuePartition = 0;
+        // Base Case
+        if (this.root == null) {
+            throw new NullPointerException("The tree does not have root !");
+        }
+        // Create an empty queue for level order tarversal.
+        Queue<Node> q = new LinkedList<>();
+
+        // Enqueue Root and initialize height.
+        q.add(this.root);
+
+        while (true) {
+            // nodeCount (queue size) indicates number of nodes at current level.
+            int nodeCount = q.size();
+
+            if (nodeCount == 0) {
+                break;
+            }
+            int tempPartition = queuePartition; // Temporary queuePartition value used for while() loop.
+            /* Dequeue all elements in the HALF LEFT of the tree at the 
+               current level and Enqueue all nodes of next level.
+             */
+            while (tempPartition > 0) {
+                Node node = q.poll(); // poll() equals dequeue()
+                if (node.leftChild != null) {
+                    q.add(node.leftChild);
+                    queuePartition++;
+                }
+                if (node.rightChild != null) {
+                    q.add(node.rightChild);
+                    queuePartition++;
+                }
+                nodeCount--;
+                tempPartition--;
+                queuePartition--;
+            }
+            /* Dequeue all elements in the HALF RIGHT of the tree at the 
+               current level and Enqueue all nodes of next level.
+             */
+            while (nodeCount > 0) {
+                /* At the beginning, the Queue has only root inside it, also
+                   can be explained as <-[ |R ]<- , the root is R and the 
+                   partition "|" is at position 0.
+                 */
+                Node node = q.poll(); // poll() equals dequeue()
+                /* Dequeue root out of Queue to insert its left child and right 
+                   child back to the queue. Which currently the Queue state is
+                   <-[ | ]<- and the partition "|" is at position 0.
+                 */
+                if (node.leftChild != null) {
+                    /* Worked only once if the current Node is Root ! */
+                    if (node == this.root) {
+                        queuePartition = 1;
+                        /* If the root has left child, then enqueue left child 
+                           and move queuePartition 1 value to the right. Which 
+                           is <-[ L1 | ]<-
+                         */
+                    }
+                    q.add(node.leftChild);
+                }
+                if (node.rightChild != null) {
+                    /* If the root has right child, then enqueue right child 
+                    and keep queuePartition value the same. Which can be shown
+                    as <-[ L1 | R1 ]<-
+                     */
+                    q.add(node.rightChild);
+                }
+                nodeCount--;
+            }
+            /* For each while() loop, the partition must be the middle value of
+               the QUEUE's size, which means the number of elements in the half 
+               left of the tree must be equal to the half right of the tree.
+             */
+            if (q.size() - queuePartition != queuePartition) {
+                return false;
+            }
+            /* State 1 (SKIP): <-[ | R]<-
+               State 2 (CORRECT): <-[L1 | R1]<-
+               State 3 (CORRECT): <-[L2 L3 | R2 R3]<-
+               State 4 (CORRECT): <-[L4 L5 L6 L7 | R4 R5 R6 R7]<-
+               State 5 (CORRECT): <-[L8 L9 L10 L11 L12 | R8 R9 R10 R11 R12]<-
+               State 6 (FALSE): <-[L13 L14 L15 L16 | R13 R14 R15]<-
+             */
+        }
+        return true;
+    }
+
+// -------------------------------------------------------------
+    /**
+     * Question D, to check whether this tree is Perfectly Balanced or not.
+     *
+     * @return
+     * @deprecated
+     */
+    @Deprecated
+    public boolean isPerfectlyBalanced() {
         return this.countElems() == pow(2, this.getHeight() + 1) - 1;
     }
 
@@ -360,15 +460,7 @@ public class Tree {
      * @return
      */
     public boolean isIdentical(Tree subTree) {
-        Tree mainTree = this;
-        return isIdentical(mainTree, subTree);
-    }
-
-// -------------------------------------------------------------
-    private boolean isIdentical(Tree main, Tree sub) {
-        Node a = main.getRoot();
-        Node b = sub.getRoot();
-        return identicalTrees(a, b);
+        return identicalTrees(this.getRoot(), subTree.getRoot());
     }
 
 // -------------------------------------------------------------
