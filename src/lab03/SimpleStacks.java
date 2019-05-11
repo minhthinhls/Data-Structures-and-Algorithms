@@ -46,16 +46,16 @@ public class SimpleStacks {
 
     //-----------------------------------------------------------
     static Stack concatenate(Stack stack1, Stack stack2) throws CloneNotSupportedException {
-        Stack tempStack = new Stack(stack1.getMaxSize() + stack2.getMaxSize());
+        Stack tempStack = new Stack(stack1.getMaxSize() + stack2.getMaxSize()); // Create tempStack to reverse stack2
         Stack temp1 = (Stack) stack1.clone(stack2.getMaxSize());
-        Stack temp2 = (Stack) stack2.clone();
-        // Create tempStack to reverse and temp2 for reverse stack2
-        while (!temp2.isEmpty()) {
+        Stack temp2 = (Stack) stack2.clone(); // Clone stack2 to temp2 to do reverse.
+
+        while (!temp2.isEmpty()) { // Push the 2nd stack to a temporary stack with reverse value
             tempStack.push(temp2.pop());
-        } // Push the 2nd stack to a temporary stack with reverse value
-        while (!tempStack.isEmpty()) {
+        }
+        while (!tempStack.isEmpty()) { // Push the temp stack to the 1st stack with the right vector !!!
             temp1.push(tempStack.pop());
-        } // Push the temp stack to the 1st stack with the right vector !!!
+        }
         return temp1;
     }
 
@@ -68,8 +68,10 @@ public class SimpleStacks {
                 return false; // If there exist just 1 different value, then FALSE !
             }
         }
-        // Else return TRUE if the 2 stacks are equal in their size !!!
-        return !(!tempA.isEmpty() || !tempB.isEmpty());
+        /* Else return TRUE if the 2 stacks are equal in their size! Means that
+           no element exists in both stack after popping while() loop.
+         */
+        return tempA.isEmpty() && tempB.isEmpty();
     }
 
     //-----------------------------------------------------------
@@ -97,6 +99,5 @@ public class SimpleStacks {
         System.out.println((checkItendical(s1, s3)) ? "Stack 1 & 3 are identical" : "Stack 1 & 3 are not identical");
         System.out.println((checkItendical(s1, s4)) ? "Stack 1 & 4 are identical" : "Stack 1 & 4 are not identical");
 
-        // Take value in stack out
     }
 }
