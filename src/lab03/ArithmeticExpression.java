@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class ArithmeticExpression {
 
-    // Method to evaluate value of a postfix expression
+    // Method to evaluate value of an infix expression
     public static int evaluate(String expression) {
         char[] tokens = expression.toCharArray();
 
