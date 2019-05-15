@@ -11,9 +11,9 @@ package lab06;
  */
 public class Node {
 
-    int data; // Data used as key value
-    Node leftChild; // This node’s left child
-    Node rightChild; // This node’s right child
+    public int data; // Data used as key value
+    public Node leftChild; // This node’s left child
+    public Node rightChild; // This node’s right child
 
     public Node() {
         // Create new node.
