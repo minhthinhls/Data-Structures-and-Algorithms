@@ -93,10 +93,12 @@ public class Heaps {
      * @param arr
      */
     private static void buildMaxHeapify(int arr[]) {
-        // Build heap (rearrange array).
+        // Build heap (Re-Arrange the @array).
+        System.out.print("=> Building Max-Heapified array.........");
         for (int i = arr.length / 2 - 1; i >= 0; i--) {
             maxHeapify(arr, arr.length, i);
         }
+        System.out.println("Success !!!");
     }
 
     public static void main(String[] args) {
@@ -104,7 +106,6 @@ public class Heaps {
         Array.print(arr);
 
         (new Heaps(arr)).heapTree.displayTree(); // Display array as heaped Binary Tree.
-        System.out.println("=> Heapifying the array.........Success !!!");
         buildMaxHeapify(arr); // Build max heaped array.
         Array.print(arr);
         (new Heaps(arr)).heapTree.displayTree(); // Display array as max heaped Binary Tree.

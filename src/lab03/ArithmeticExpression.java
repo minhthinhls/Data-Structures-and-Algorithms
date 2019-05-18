@@ -40,6 +40,7 @@ public class ArithmeticExpression {
                 i--; // Step back i for 1 value.
                 values.push(Integer.parseInt(sb.toString()));
             } else if (tokens[i] == 'x') {
+                System.out.print("Enter x: ");
                 Scanner input = new Scanner(System.in);
                 int a = input.nextInt();
                 values.push(a);
@@ -114,12 +115,27 @@ public class ArithmeticExpression {
         return 0;
     }
 
-    public static void main(String args[]) {
-        System.out.println("10 + 5 * 4 = " + ArithmeticExpression.evaluate("10 + 5 * 4"));
-        System.out.println("100 * ( 5 + 4 ) = " + ArithmeticExpression.evaluate("100 * ( 5 + 4 )"));
-        System.out.println("100 + ( 5 + 4 ) / 3 = " + ArithmeticExpression.evaluate("100 + ( 5 + 4 ) / 3"));
-        System.out.println("2 * 2 * 100 + ( 5 * 4 + 1 ) / 3 = " + ArithmeticExpression.evaluate("2 * 2 * 100 + ( 5 * 4 + 1 ) / 3"));
-        System.out.print("Enter x: ");
-        System.out.println("100 * ( x + 4 ) / 3 = " + ArithmeticExpression.evaluate("100 * ( x + 4 ) / 3"));
+    public static void eval(String args) {
+        StringBuilder sb = new StringBuilder();
+        if (args.contains("x")) {
+            System.out.println(args + " = ?");
+        }
+        sb.append(args).append(" = ");
+        try {
+            sb.append(ArithmeticExpression.evaluate(args));
+            System.out.println(sb.toString());
+        } catch (Exception e) {
+            System.out.println("Expression error !");
+            e.printStackTrace();
+        }
     }
+
+    public static void main(String args[]) {
+        eval("10 + 5 * 4");
+        eval("100 * ( 5 + 4 )");
+        eval("100 + ( 5 + 4 ) / 3");
+        eval("2 * 2 * 100 + ( 5 * 4 + 1 ) / 3");
+        eval("100 * ( x + 4 ) / 3");
+    }
+
 }

@@ -181,10 +181,13 @@ class DoublyLinkedList {
     }
 // -------------------------------------------------------------
 
+    /**
+     * Implement the insertion sort for Doubly Linked List.
+     */
     public void insertionSort() {
         Link sorted;
         Link unsorted;
-        System.out.println("=> Sorting the Linked List.........Success !!!");
+        System.out.print("=> Sorting the Linked List.........");
         try {
             for (sorted = this.first; sorted.next != null; sorted = sorted.next) {
                 long temp = sorted.next.dData;
@@ -193,7 +196,9 @@ class DoublyLinkedList {
                 }
                 unsorted.dData = temp;
             }
+            System.out.println("Success !!!");
         } catch (Exception e) {
+            System.out.println("Not Success. Error found !!!");
             e.printStackTrace();
         } finally {
             this.displayForward(); // Display list forward.
@@ -285,7 +290,7 @@ class DoublyLinkedApp {
         list.displayBackward(); // Display list backward.
 
         deleteFirst(list, 1); // Delete first item 1 time.
-        deleteLast(list, 2); // Delete last item 1 time.
+        deleteLast(list, 2); // Delete last item 2 times.
         deleteKey(list, new int[]{44}); // Delete item with key 44.
 
         insertAfter(list, new int[][]{{22, 77}, {33, 88}}); // Insert {77, 88} after {22, 33}.
