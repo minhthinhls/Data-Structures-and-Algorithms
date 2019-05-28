@@ -6,6 +6,7 @@
 package lab03;
 
 import java.util.Stack;
+import finalExam.Array;
 
 /**
  *
@@ -13,21 +14,19 @@ import java.util.Stack;
  */
 public class SpecialArray {
 
-    int[] array = new int[20];
-    Stack<int[]> state = new Stack<>();
-    Stack<int[]> toRedo = new Stack<>();
+    private Stack<int[]> state = new Stack<>();
+    private Stack<int[]> toRedo = new Stack<>();
 
     SpecialArray(int[] arr) {
-        this.array = arr;
-        state.push(this.array.clone());
+        state.push(arr.clone());
         this.display();
     }
 
     public void update(int position, int value) {
         try {
-            array = state.peek().clone();
+            int[] array = state.peek().clone();
             array[position] = value;
-            state.push(array.clone());
+            state.push(array);
             toRedo.clear();
         } catch (Exception e) {
             e.getMessage();
@@ -42,7 +41,6 @@ public class SpecialArray {
             return;
         }
         try {
-            array = state.peek();
             toRedo.push(state.pop());
         } catch (Exception e) {
             e.getMessage();
@@ -58,7 +56,6 @@ public class SpecialArray {
         }
         try {
             state.push(toRedo.pop());
-            array = state.peek();
         } catch (Exception e) {
             e.getMessage();
             e.printStackTrace();
@@ -79,19 +76,21 @@ public class SpecialArray {
 class Application {
 
     public static void main(String[] args) {
-        SpecialArray sa = new SpecialArray(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20});
-        sa.update(8, 999999);
-        sa.update(9, 1000000);
+        //SpecialArray sa = new SpecialArray(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20});
+        SpecialArray sa = new SpecialArray(Array.randomInit(20));
+        sa.update(8, 999999); // toRedo.clear()
+        sa.update(9, 1000000); // toRedo.clear()
         sa.undo();
         sa.redo();
         sa.undo();
-        sa.update(1, 222222);
+        sa.update(1, 222222); // toRedo.clear()
         sa.undo();
-        sa.update(3, 444444);
-        sa.redo();
-        sa.redo();
+        sa.update(3, 444444); // toRedo.clear()
+        sa.redo(); // Nothing happened since toRedo.size() < 1
+        sa.redo(); // Nothing happened since toRedo.size() < 1
         sa.undo();
         sa.undo();
-    } // end main()
-}// end class Application
+        sa.undo(); // Nothing happened since [state.size() == 1] < 2
+    } // End main()
+} // End class Application
 ////////////////////////////////////////////////////////////////
