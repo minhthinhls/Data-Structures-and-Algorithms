@@ -5,6 +5,7 @@
  */
 package lab02_2020;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -35,6 +36,7 @@ public class WorkingPanel extends JPanel
 
     public WorkingPanel() {
         this.setBorder(BorderFactory.createEtchedBorder());
+        this.setBackground(Color.CYAN);
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
         this.addComponentListener(this);
@@ -111,8 +113,8 @@ public class WorkingPanel extends JPanel
         } else if (e.getSource() == MainFrame.btnRect) {
             MainFrame.infoPanel.println("action: draw Rect");
         } else if (e.getSource() == MainFrame.btnGraph) {
-//            sin = Graph.quadratic(1, 1, 1, 1, 1, 1);
-            quad = Graph.quadratic(2, 5, 10, 1, 10, 0.01);
+            sin = Graph.sin(2, -100, 100, 0.05);
+            quad = Graph.quadratic(1, 0, 0, -100, 100, 0.05);
             this.repaint();
         }
     }
