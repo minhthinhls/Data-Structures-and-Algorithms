@@ -59,11 +59,17 @@ public class Point2D extends GeomObject {
     }
 
     public static double distanceAB(Point2D a, Point2D b) {
-        throw new UnsupportedOperationException("Reuse code from LAB1");
+        return Math.sqrt(
+                Math.pow(a.getX() - b.getX(), 2)
+                + Math.pow(a.getY() - b.getY(), 2)
+        );
     }
 
     public double distanceTo(Point2D point) {
-        throw new UnsupportedOperationException("Reuse code from LAB1");
+        return Math.sqrt(
+                Math.pow(x - point.getX(), 2)
+                + Math.pow(y - point.getY(), 2)
+        );
     }
 
     /**
